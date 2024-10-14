@@ -12,7 +12,10 @@ const App = () => {
         if (!title) return
         const response = await fetch(`${API_URL}&s=${title}`);
         const data = await response.json();
-        setMovies(data.Search);
+        if (data.Error) return setMovies([]);
+        let res = data.Search
+        if (res.length > 0) setMovies(data.Search)
+        else setMovies([]);
     }
 
     useEffect(() => {
